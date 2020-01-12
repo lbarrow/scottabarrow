@@ -1,0 +1,36 @@
+.grid {
+	@media (min-width: 36em) {
+		display: grid;
+		grid-gap: 1.875rem;
+		margin-bottom: 2.5rem;
+	}
+}
+.grid--duo {
+	@media (min-width: 36em) {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+.grid--trio {
+	@media (min-width: 48em) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+.grid--quartet {
+	@media (min-width: 48em) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+.grid--any {
+	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+}
+.grid--sidebar {
+	@media (min-width: 48em) {
+		grid-template-columns: 1fr 17.5rem;
+	}
+}
+.grid__item {
+	margin-bottom: 1.875rem;
+	@media (min-width: 48em) {
+		margin-bottom: 0;
+	}
+}

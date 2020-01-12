@@ -1,0 +1,3 @@
+mixin navItem(title, url, navName)
+	- const navItem = navName ? navName : title;
+	li: a(href=url, class=currentNavItem == navItem ? 'is-current' : '')= title

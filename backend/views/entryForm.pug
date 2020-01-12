@@ -1,0 +1,76 @@
+extends layout
+
+include mixins/form/_inputs
+include mixins/form/_deleteModal
+
+block content
+	.layout.layout--narrow
+		.page-title
+			h1.page-title__title= title
+			if entry._id
+				+deleteButton('entry')
+
+		.area
+			- const updateURL = entry._id === undefined ? '' : `/entries/${entry._id}/update`
+			form(method='POST' action=updateURL enctype="multipart/form-data")
+			
+				+inputText({ 
+					name: 'title',
+					label: 'Title',
+					value: entry.title,
+					required: true
+				})
+				+inputTextarea({ 
+					name: 'description',
+					label: 'Description',
+					maxlength: 1000,
+					value: entry.description,
+					required: false
+				})
+				+inputDate({ 
+					name: 'date',
+					label: 'Date',
+					value: h.moment(entry.date).format('YYYY-MM-DD'),
+					required: true
+				})
+				+inputSelect({ 
+					name: 'stop',
+					label: 'Stop',
+					value: `${entry.stop}`,
+					rows: stopValues,
+					required: true
+				})
+				
+				if entry.photos && entry.photos.length
+					hr
+					h2.title.title--minor Photos
+					.photo-grid
+						each photo, index in entry.photos
+							.photo-grid__card
+								.photo-grid__photo
+									img(src=`/uploads/${photo.filePath}`)
+								.photo-grid__caption #{photo.caption}
+								a.photo-grid__delete(href=`/entries/${entry._id}/photo/${photo._id}/delete`) delete
+								if index != 0
+									a.photo-grid__up(href=`/entries/${entry._id}/photo/${photo._id}/up`) move up
+								if index < entry.photos.length - 1
+									a.photo-grid__down(href=`/entries/${entry._id}/photo/${photo._id}/down`) move down
+
+				hr
+
+				h2.title.title--minor Add a Photo
+				+inputUploadFile({ 
+					label: 'Image',
+					name: 'photofile',
+					filetype: 'image'
+				})
+				+inputText({ 
+					name: 'photoCaption',
+					label: 'Photo Caption'
+				})
+
+				+inputSubmit({
+					label: 'Save'
+				})
+	if entry._id
+		+deleteModal('entry',`/entries/${entry._id}/delete`)

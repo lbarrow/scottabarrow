@@ -1,0 +1,18 @@
+.icon {
+	display: inline-block;
+	width: 1.25rem;
+	height: 1.25rem;
+	transform: scale(1.25);
+}
+.icon--white path {
+	fill: white;
+}
+.icon--red path {
+	fill: $red;
+}
+.icon--teal path {
+	fill: $teal_med;
+}
+.icon--dark path {
+	fill: rgba(black, 0.7);
+}

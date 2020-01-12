@@ -1,0 +1,44 @@
+mixin svgIcon(icon, color = 'white')
+	//- we do this case statement because pug doesn't support dynamic include urls
+	.icon(class=[`icon--${color}`])
+		case icon
+			when 'logout'
+				include _icon_logout
+			when 'add'
+				include _icon_add
+			when 'remove'
+				include _icon_remove
+			when 'close'
+				include _icon_close
+			when 'confirm'
+				include _icon_confirm
+			when 'next'
+				include _icon_next
+			when 'prev'
+				include _icon_prev
+			when 'reveal'
+				include _icon_reveal
+			when 'collapse'
+				include _icon_collapse
+			when 'search'
+				include _icon_search
+			when 'edit'
+				include _icon_edit
+			when 'menu'
+				include _icon_menu
+			when 'options'
+				include _icon_options
+			when 'error'
+				include _icon_error
+			when 'info'
+				include _icon_info
+			when 'warning'
+				include _icon_warning
+			when 'success'
+				include _icon_success
+			when 'table'
+				include _icon_table
+			when 'file'
+				include _icon_file
+			when 'calendar'
+				include _icon_calendar

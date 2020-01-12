@@ -1,0 +1,117 @@
+.force-wrap {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	-ms-word-break: break-all;
+	word-break: break-all;
+	word-break: break-word;
+}
+
+.inline-arrow {
+	@include font-size(12);
+	opacity: 0.4;
+	margin: 0 0.25rem;
+}
+
+.inline-date {
+	display: inline-block;
+	font-weight: bold;
+	@include font-size(10);
+	letter-spacing: 0.1em;
+	color: $text_med;
+	text-transform: uppercase;
+	position: relative;
+	top: -2px;
+	strong {
+		color: $blue;
+		letter-spacing: 0;
+		@include font-size(16);
+		font-weight: normal;
+		position: relative;
+		bottom: -2px;
+		margin-right: 0.1em;
+	}
+}
+.date-box {
+	background-color: $blue_grey;
+	border-radius: 0.5em;
+	text-align: center;
+	width: 44px;
+	padding: 0.625em 0;
+	width: 2.75rem;
+	font-weight: bold;
+	@include font-size(10);
+	letter-spacing: 0.1em;
+	line-height: 1;
+	color: $text;
+	text-transform: uppercase;
+	strong {
+		display: block;
+		color: white;
+		letter-spacing: 0;
+		@include font-size(16);
+		font-weight: normal;
+	}
+}
+
+.small-caps {
+	color: $text_med;
+	@include font-size(12);
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+}
+.small-desc {
+	@include font-size(14);
+	padding-bottom: 1rem;
+}
+.fine-print,
+.no-results {
+	font-style: italic;
+	@include font-size(14);
+	color: $text_med;
+}
+
+.pill {
+	border-radius: 0.375em;
+	color: white;
+	display: inline-block;
+	padding: 0.25em 0.375em 0.15em;
+	letter-spacing: 0.1em;
+	position: relative;
+	top: -0.1em;
+	@include font-size(11);
+	font-weight: bold;
+	background-color: $blue;
+	text-transform: uppercase;
+}
+.pill--secondary {
+	background-color: $text_light;
+}
+
+.inline-link-group {
+	@include font-size(14);
+}
+.inline-link-group__link {
+	display: inline-block;
+	padding: 0 0.5em;
+	border-right: 1px solid $border_light;
+	&:last-child {
+		border-right: none;
+	}
+}
+
+.content-address {
+	@include font-size(14);
+	padding-bottom: 0.625rem;
+}
+.content-address__name {
+	font-weight: bold;
+	@include font-size(16);
+}
+
+.image {
+	margin-bottom: 1.25rem;
+	img {
+		box-shadow: 0 3px 8px rgba(black, 0.2);
+		display: block;
+	}
+}

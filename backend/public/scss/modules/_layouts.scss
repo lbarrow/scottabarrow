@@ -1,0 +1,121 @@
+// layout width options
+.layout {
+	margin-left: auto;
+	margin-right: auto;
+}
+.layout--skinny {
+	max-width: 32rem;
+}
+.layout--narrow {
+	max-width: 52.5rem;
+}
+.layout--wide {
+	@media (min-width: 76em) {
+		margin-left: -3.75rem;
+		margin-right: -3.75rem;
+	}
+	@media (min-width: 84em) {
+		margin-left: -7.5rem;
+		margin-right: -7.5rem;
+	}
+}
+
+// layout type: main area and sidebar
+.layout--main-with-sidebar {
+	@media (min-width: 48em) {
+		display: grid;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+		grid-gap: 1.875rem;
+	}
+}
+
+// layout type: two equal width areas
+.layout--two-eq-cols {
+	@media (min-width: 60em) {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-gap: 1.875rem;
+	}
+}
+
+.sticky-container {
+	@media (min-width: 60em) {
+		padding-left: 18rem;
+		position: relative;
+		@include clearfix;
+	}
+	@media (min-width: 74em) {
+		padding-left: 22rem;
+	}
+}
+.sticky-container__sticky-wrapper {
+	@media (min-width: 60em) {
+		position: absolute;
+		left: 0;
+	}
+}
+.sticky-container__sticky-item {
+	@media (min-width: 60em) {
+		position: absolute;
+		width: 16rem;
+	}
+	@media (min-width: 74em) {
+		width: 20rem;
+	}
+}
+
+.flex-col {
+	@media (min-width: 36em) {
+		display: flex;
+	}
+	&.flex-col--split-wide {
+		display: block;
+		@media (min-width: 70em) {
+			display: flex;
+		}
+	}
+	&.flex-col--v-center {
+		align-items: center;
+	}
+}
+.flex-col__area {
+	margin-bottom: 20px;
+	@media (min-width: 36em) {
+		flex-grow: 1;
+		margin-left: 1rem;
+		margin-right: 1rem;
+		margin-bottom: 0;
+	}
+	&:first-child {
+		@media (min-width: 36em) {
+			margin-left: 0;
+		}
+	}
+	&:last-child {
+		margin-bottom: 0;
+		@media (min-width: 36em) {
+			margin-right: 0;
+		}
+	}
+	.flex-col--no-vspacing > & {
+		margin-bottom: 0;
+	}
+	.flex-col--eq-widths > & {
+		flex: 1 0 0;
+	}
+}
+.flex-col__area--bigger {
+	flex: 2;
+}
+.flex-col__area--center {
+	@media (min-width: 36em) {
+		display: flex;
+		justify-content: center;
+	}
+}
+.flex-col__area--right {
+	@media (min-width: 36em) {
+		display: flex;
+		justify-content: flex-end;
+	}
+}

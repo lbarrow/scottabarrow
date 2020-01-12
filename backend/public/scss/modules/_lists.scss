@@ -1,0 +1,144 @@
+.list {
+	list-style: none;
+	margin: 0 0 1.25em;
+	padding: 0;
+	li {
+		border-top: 1px solid lighten($border_light, 5);
+		margin-bottom: 0;
+		padding: 0.3125em 0;
+		position: relative;
+		&.is-disabled {
+			opacity: 0.5;
+		}
+	}
+	&.list--li-links li,
+	&.list--li-itemwrap li {
+		padding: 0;
+	}
+	&.list--dates-box li {
+		min-height: 3.425em;
+	}
+}
+.list--simple li {
+	border-top: none;
+}
+.list--bits {
+	margin-bottom: 0;
+	& > li {
+		border-left: 2px solid $blue_light_desat;
+		padding-left: 0.75em;
+		padding-bottom: 0;
+		padding-top: 0;
+		margin-bottom: 1em;
+	}
+}
+.list--bits__flag {
+	font-weight: bold;
+	display: inline-block;
+	background-color: $blue_light_desat;
+	color: white;
+	@include font-size(14);
+	padding: 0.25em 0.5em 0.25em 1.2em;
+	margin-left: -1.2em;
+}
+.list__item-wrap,
+.list__link-wrap {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	padding: 0.625rem;
+}
+.list__link-wrap {
+	cursor: pointer;
+	font-weight: normal;
+	text-decoration: none;
+	&:hover {
+		background-color: rgba($teal_med, 0.15);
+		text-decoration: none;
+	}
+}
+.list__item-part {
+	&:first-child {
+		padding-right: 0.625rem;
+	}
+	&:last-child {
+		padding-left: 0.625rem;
+	}
+}
+.list__item-part--secondary {
+	.list--dates & {
+		text-align: right;
+		width: 4rem;
+	}
+}
+.list__item-part--main {
+	flex: 1;
+}
+.list__item-note {
+	font-style: italic;
+	@include font-size(14);
+	color: $text_med;
+}
+.list__more {
+	display: block;
+	@include font-size(12);
+	letter-spacing: 0.15em;
+	text-transform: uppercase;
+	padding-top: 0.625rem;
+	margin-bottom: 1em;
+	.list--dates & {
+		padding-left: 5.3125rem;
+	}
+	&.button {
+		@include font-size(12);
+		text-align: left;
+		&:hover {
+			background-color: transparent;
+			color: darken($teal, 10);
+			text-decoration: underline;
+		}
+	}
+}
+.list__item-part--icon {
+	display: flex;
+	align-content: center;
+	padding: 0.5rem;
+}
+.list__item-part--text {
+	padding: 0.5rem;
+}
+
+dl {
+}
+dt {
+	border-top: 1px solid $border_light;
+	text-transform: uppercase;
+	@include font-size(12);
+	color: $blue_med;
+	padding-top: 0.875rem;
+	letter-spacing: 0.1rem;
+}
+dd {
+	margin: 0;
+	padding-bottom: 0.875rem;
+}
+
+.photo-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+	grid-gap: 1.25rem;
+}
+.photo-grid__card {
+	padding: 0.625rem;
+	box-shadow: 0 6px 8px rgba(black, 0.2);
+	display: flex;
+	flex-direction: column;
+}
+.photo-grid__photo {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+.photo-grid__caption {
+	margin-top: auto;
+}

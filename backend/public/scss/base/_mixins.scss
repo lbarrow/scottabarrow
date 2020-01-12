@@ -1,0 +1,45 @@
+// mixin.scss
+// ------------------------
+// Basic sass shortcut mixins
+
+@mixin bg-retina($img, $size, $filetype: png) {
+	background-image: url( $img + '.' + $filetype );
+	-webkit-background-size: $size;
+	-moz-background-size: $size;
+	-o-background-size: $size;
+	background-size: $size;
+	@media  (min--moz-device-pixel-ratio: 1.5),
+			(-o-min-device-pixel-ratio: 3/2),
+			(-webkit-min-device-pixel-ratio: 1.5),
+			(min-device-pixel-ratio: 1.5),
+			(min-resolution: 144dpi),
+			(min-resolution: 1.5dppx) {
+		& {
+			 background-image: url($img + '@2x' + '.' + $filetype);
+		}
+	}
+}
+
+@mixin font-size($font-size){
+	font-size: $font-size +px;
+	font-size: $font-size / $base-font-size +rem;
+}
+
+@mixin clearfix {
+    &::after {
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+}
+
+@mixin visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}

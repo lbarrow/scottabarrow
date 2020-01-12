@@ -1,0 +1,61 @@
+extends layout
+
+include mixins/form/_inputs
+include mixins/form/_deleteModal
+
+block content
+	.layout.layout--narrow
+		.page-title
+			h1.page-title__title= title
+			if stop._id
+				+deleteButton('Stop')
+
+		.area
+			- const updateURL = stop._id === undefined ? '' : `/stops/${stop._id}/update`
+			form(method='POST' action=updateURL)
+			
+				+inputText({ 
+					name: 'title',
+					label: 'Title',
+					value: stop.title,
+					required: true
+				})
+				+inputDate({ 
+					name: 'startDate',
+					label: 'Start Date',
+					value: h.moment(stop.startDate).format('YYYY-MM-DD'),
+					required: true
+				})
+				+inputDate({ 
+					name: 'endDate',
+					label: 'End Date',
+					value: h.moment(stop.endDate).format('YYYY-MM-DD'),
+					required: true
+				})
+
+				+inputSelect({ 
+					name: 'trek',
+					label: 'Trek',
+					value: `${stop.trek}`,
+					rows: trekValues,
+					required: true
+				})
+
+				+inputText({ 
+					name: 'location[coordinates][0]',
+					label: 'Longitude',
+					value: (stop.location && stop.location.coordinates[0]),
+					required: true
+				})
+				+inputText({ 
+					name: 'location[coordinates][1]',
+					label: 'Latitude',
+					value: (stop.location && stop.location.coordinates[1]),
+					required: true
+				})
+
+				+inputSubmit({
+					label: 'Save'
+				})
+	if stop._id
+		+deleteModal('stop',`/stops/${stop._id}/delete`)

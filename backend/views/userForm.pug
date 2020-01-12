@@ -1,0 +1,37 @@
+extends layout
+
+include mixins/form/_inputs
+include mixins/form/_deleteModal
+
+block content
+	.layout.layout--narrow
+		.page-title
+			h1.page-title__title Edit Your Account
+
+		.area
+			form(action="/account" method="POST")
+				+inputText({ 
+					name: 'name',
+					label: 'Name',
+					required: true,
+					value: user.name
+				})
+				+inputText({ 
+					name: 'email',
+					label: 'Email',
+					required: true,
+					inputtype: 'email',
+					value: user.email
+				})
+				+inputText({ 
+					name: 'password',
+					label: 'Change Password',
+					inputtype: 'password',
+					required: false,
+					optionalLabel: true
+				})
+
+				+inputSubmit({
+					label: 'Save'
+				})
+				

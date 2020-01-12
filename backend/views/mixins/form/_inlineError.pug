@@ -1,0 +1,5 @@
+mixin inlineError(inputName, errors)
+	if errors
+		each error in errors
+			if error.path === inputName
+				.field__error= error.message

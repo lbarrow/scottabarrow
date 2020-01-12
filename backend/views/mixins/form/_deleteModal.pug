@@ -1,0 +1,17 @@
+mixin deleteModal(name, url)
+	#js-delete-modal.js-dialog.dialog(role='dialog' aria-hidden='true' aria-labelledby='delete-modal-title')
+		button.js-close-dialog.dialog__close close
+		.dialog__inner
+			h2#delete-modal-title.dialog__title Confirm
+			p Are you sure you want to delete this #{name}?
+			.field.field--submit
+				.field--submit__submit
+					a.button.button--confirm(href=url) Delete
+				.field--submit__others
+					a.button.button--transparent.js-close-dialog Cancel
+
+mixin deleteButton(name)
+	.page-title__extra
+		button.button.button--red.js-open-dialog(data-dialog-id="js-delete-modal")
+			+svgIcon('remove')
+			| Delete #{name}

@@ -1,0 +1,212 @@
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+}
+
+html,
+button,
+body,
+input,
+select,
+textarea {
+	color: $text;
+	font: 100%/1.5 $font_sans;
+	font-weight: 500;
+}
+
+main {
+	display: block;
+}
+
+a {
+	color: $teal_med;
+	font-weight: bold;
+	transition: background-color 0.2s ease;
+	text-decoration: none;
+	&:hover {
+		color: darken($teal_med, 10);
+		text-decoration: underline;
+	}
+}
+
+hr {
+	display: block;
+	height: 0;
+	border: 0;
+	border-top: 0.25rem solid $border_light;
+	margin: 2.5rem 0;
+	padding: 0;
+}
+
+audio {
+	margin-bottom: 1.25rem;
+}
+
+video,
+img {
+	vertical-align: middle;
+	max-width: 100%;
+}
+
+fieldset {
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+[type='text'],
+[type='email'],
+[type='tel'],
+[type='password'],
+textarea {
+	@include font-size(16);
+	border: 1px solid $border_light;
+	padding: 0.325em 0.75em 0.35em;
+	border-radius: 0.375em;
+	height: 2.5em;
+	max-width: 100%;
+	-webkit-appearance: none;
+}
+textarea {
+	max-width: 100%;
+	min-height: 6.75rem;
+	width: 100%;
+	-webkit-appearance: none;
+}
+[type='text'],
+[type='email'],
+[type='tel'],
+[type='password'] {
+	width: 100%;
+}
+[type='text']:focus,
+[type='email']:focus,
+[type='tel']:focus,
+[type='password']:focus,
+textarea:focus {
+	border: 1px solid rgba($blue, 0.5);
+	background-color: white;
+	outline: none;
+}
+[type='tel'] {
+	max-width: 8.5em;
+}
+[type='submit'] {
+	margin-right: 0.5em;
+}
+::-webkit-input-placeholder {
+	/* Chrome/Opera/Safari */
+	color: $text_light;
+	font-style: italic;
+}
+::-moz-placeholder {
+	/* Firefox 19+ */
+	color: $text_light;
+	font-style: italic;
+}
+:-ms-input-placeholder {
+	/* IE 10+ */
+	color: $text_light;
+	font-style: italic;
+}
+:-moz-placeholder {
+	/* Firefox 18- */
+	color: $text_light;
+	font-style: italic;
+}
+
+select {
+	width: 100%;
+}
+.custom-select {
+	position: relative;
+	display: inline-block;
+	margin-right: 0.625rem;
+	padding: 0;
+	border-radius: 0.375em;
+	background: white;
+}
+.custom-select select {
+	width: 100%;
+	margin: 0;
+	background-color: white;
+	border: 1px solid $border_light;
+	outline: none;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	appearance: none;
+	-webkit-appearance: none;
+	@include font-size(16);
+	font-family: $font_sans;
+	color: $text;
+	padding: 0.25em 2.75em 0.25em 0.8em;
+	height: 2.5em;
+	line-height: 1.3;
+}
+.custom-select::after {
+	content: '';
+	position: absolute;
+	width: 0;
+	height: 0;
+	top: 50%;
+	right: 0.75em;
+	margin-top: -3px;
+	border-left: 0.375em solid transparent;
+	border-right: 0.375em solid transparent;
+	border-top: 0.375em solid $teal_med;
+	background-repeat: no-repeat;
+	z-index: 2;
+	pointer-events: none;
+}
+.custom-select::before {
+	content: '';
+	position: absolute;
+	width: 1px;
+	height: 66%;
+	top: 18%;
+	right: 2em;
+	background-color: $border_light;
+	z-index: 2;
+	pointer-events: none;
+}
+.custom-select select:hover {
+	border: 1px solid rgba($teal_med, 0.7);
+}
+.custom-select select:focus {
+	outline: none;
+	background-color: white;
+	border: 1px solid rgba($blue, 0.5);
+	color: #222;
+}
+x:-o-prefocus,
+.custom-select::after {
+	display: none;
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+	.custom-select select::-ms-expand {
+		display: none;
+	}
+	.custom-select select:focus::-ms-value {
+		background: transparent;
+		color: #222;
+	}
+}
+.custom-select select:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #000;
+}
+.custom-select--full {
+	display: block;
+	margin-right: 0;
+}
+.custom-select__seperator {
+	color: $text_med;
+	margin-right: 0.625rem;
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 0.5em;
+	font-style: italic;
+}

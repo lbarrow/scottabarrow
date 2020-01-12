@@ -1,0 +1,135 @@
+include _inlineError
+
+mixin inputText(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- const required = config.required == false ? false : true;
+	- const inputtype = config.inputtype ? config.inputtype : 'text';
+	- const maxlength = config.maxlength ? config.maxlength : '100';
+	- const fieldsetClass = config.fieldsetClass ? config.fieldsetClass : '';
+	- const inputClass = config.inputClass ? config.inputClass : '';
+	- const inputPrefix = config.inputPrefix ? config.inputPrefix : '';
+	- const optionalLabel = config.optionalLabel == false ? false : true;
+	fieldset.field(class=(fieldsetClass ? fieldsetClass : ''))
+		label(for=`input_${config.name}`)= label
+			if !required && optionalLabel
+				span.label__note optional
+		+inlineError(config.name, errors)
+		div.field__input-wrapper
+			if inputPrefix
+				div.input__prefix= `${inputPrefix}`
+			input(class=(inputClass ? inputClass : '') id=`input_${config.name}` type=inputtype name=config.name required=required value=config.value maxlength=maxlength)
+
+
+mixin inputHidden(config)
+	input(type='hidden' name=config.name value=config.value)
+
+
+mixin inputDate(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- const required = config.required ? false : true;
+	- let pickerClass = config.range ? 'js-datepicker-range' : 'js-datepicker';
+	- pickerClass = config.disableFuture ? pickerClass + ' js-disable-future' : pickerClass;
+	- pickerClass = config.disablePast ? pickerClass + ' js-disable-past' : pickerClass;
+	- const pickerWrapperClass = config.range ? 'field--daterange' : 'field--datepicker';
+	fieldset.field(class=pickerWrapperClass)
+		label(for=`input_${config.name}`)= label
+		+inlineError(config.name, errors)
+		.field__input-wrapper
+			+svgIcon('calendar', 'dark')
+			input(class=pickerClass id=`input_${config.name}` type='text' name=config.name required=required value=config.value)
+
+
+mixin inputSelect(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	fieldset.field.field--select
+		label(for=`input_${config.name}`)= label
+		+inlineError(config.name, errors)
+		.custom-select
+			select(id=`input_${config.name}` name=config.name required=req)
+				each row in config.rows
+					option(value=row.value selected=(row.value == config.value))= row.label
+
+
+mixin inputMultiSelect(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	fieldset.field.field--multiselect
+		label(for=`input_${config.name}`)= label
+		+inlineError(config.name, errors)
+		select.js-select2(id=`input_${config.name}` name=`${config.name}[]` multiple="multiple" required=req style="width: 100%")
+			each row in config.rows
+				- let isSelected = config.checkedItems.includes(row.value)
+				option(value=row.value selected=isSelected)= row.label
+			
+
+mixin inputCheckbox(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- let isChecked = config.value
+	fieldset.field.field--checkbox
+		input(id=`input_${config.name}` type='checkbox' checked=isChecked name=config.name)
+		label(for=`input_${config.name}`)= label
+
+mixin inputCheckboxList(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	fieldset.field.field--radio-list
+		p.field--radio-list__desc= label
+		ul.field--radio-list__items
+			each row, index in config.rows
+				li.field--radio-list__item
+					- let isChecked = config.checkedItems.includes(row.value)
+					input(id=`input_${config.name}_${index}` type='checkbox' checked=isChecked name=`${config.name}[]` value=row.value)
+					label(for=`input_${config.name}_${index}`)= row.label
+			else
+				li.field--radio-list__item None available.
+
+
+mixin inputEditor(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- const tinymceSmall = config.small ? 'Y' : 'N';
+	fieldset.field.field--editor
+		label(for=`input_${config.name}`)= label
+		+inlineError(config.name, errors)
+		textarea.js-tinymce-editor(id=`input_${config.name}` name=config.name data-tinymce-small=tinymceSmall) !{config.value}
+
+
+mixin inputTextarea(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- const required = config.required == false ? false : true;
+	- const maxlength = config.maxlength ? config.maxlength : '1000';
+	- const optionalLabel = config.optionalLabel == false ? false : true;
+	fieldset.field.field--textarea
+		label(for=`input_${config.name}`)= label
+			if !required && optionalLabel
+				span.label__note optional
+		+inlineError(config.name, errors)
+		textarea(name=config.name required=required maxlength=maxlength) !{config.value}
+
+
+mixin inputUploadFile(config)
+	- const label = config.label ? config.label : helpers.titleCase(config.name);
+	- const path = config.path ? config.path : '';
+	- let typesAccepted = '';
+	if config.filetype === 'image'
+		- typesAccepted = 'image/gif, image/jpeg, image/png';
+	else if config.filetype === 'audio'
+		- typesAccepted = 'audio/mp3,audio/mpeg3';
+	else if config.filetype === 'csv'
+		- typesAccepted = '.csv';	
+	fieldset.field.field--file
+		.faux-label= label
+		if config.value
+			if config.filetype === 'image'
+				.image: img(src=`${path}${config.value}` alt='')
+			if config.filetype === 'audio'
+				audio(src=`${path}${config.value}` controls)
+		.upload.js-upload
+			label.button.upload__button(for=`input_${config.name}`)
+				+svgIcon('file') 
+				| Upload File
+			.upload__input
+				input.js-upload-input(id=`input_${config.name}` name=config.name type='file' accept=typesAccepted)
+			.upload__path.js-upload-path No file specified
+
+
+mixin inputSubmit(config)
+	fieldset.field.field--submit
+		input.button(type='submit' value=config.label)

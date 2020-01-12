@@ -1,0 +1,34 @@
+.panel {
+	@include clearfix;
+	background-color: $bg_light;
+	padding: 1.25rem;
+	border-radius: 0.5em;
+	margin-bottom: 1.875rem;
+	& > *:last-child {
+		margin-bottom: 0;
+	}
+}
+.panel--minor {
+	background-color: transparent;
+	border: 1px solid $border_light;
+	box-shadow: 0 2px 8px rgba(black, 0.1);
+	box-shadow: 0 2px 8px rgba(black, 0.1);
+}
+.panel--med {
+	background-color: white;
+	border: 1px solid rgba($border_light, 0.6);
+	box-shadow: 0 2px 8px rgba(black, 0.075);
+}
+
+.scrollbox {
+	table {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	@media (min-width: 48em) {
+		border: 1px solid $border_light;
+		max-height: 10em;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+	}
+}

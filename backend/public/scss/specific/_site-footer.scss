@@ -1,0 +1,32 @@
+.site-footer {
+	@include font-size(10);
+	color: $text_med;
+	letter-spacing: 0.1rem;
+	text-transform: uppercase;
+	text-align: center;
+	a {
+		color: $text_med;
+		font-weight: normal;
+		text-decoration: underline;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+.site-footer__inner {
+	border-top: 1px solid $border_light;
+	margin: 0 auto;
+	max-width: 65.5rem;
+	padding: 1.875rem 1.25rem;
+}
+.site-footer__copy {
+	display: inline-block;
+}
+.site-footer__sep {
+	display: inline-block;
+	opacity: 0.5;
+	margin: 0 0.5rem;
+}
+.site-footer__powered {
+	display: inline-block;
+}

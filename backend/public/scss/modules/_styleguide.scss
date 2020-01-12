@@ -1,0 +1,42 @@
+.sg-section-nav {
+	background-color: $blue_dark;
+	list-style: none;
+	padding: 20px 30px 15px;
+	columns: 2;
+	@media (min-width: 48em) {
+		columns: 3;
+	}
+	li {
+		display: inline-block;
+		padding-bottom: 10px;
+		width: 100%;
+	}
+	.fine-print {
+		color: white;
+	}
+	a {
+		color: $teal;
+	}
+}
+.sg__code {
+    display: inline-block;
+    background-color: $blue_dark;
+    border-radius: 0.5em;
+    margin: 0 0.25em;
+    color: white;
+    @include font-size(13);
+    padding: 0.125em 0.25em;
+    text-transform: none !important;
+}
+.sg__gridunits {
+    padding: 1em;
+    text-align: center;
+    background-color: $teal_med;
+    color: white;
+}
+.sg__section-title {
+	border: none;
+	.title {
+		@include font-size(24);
+	}
+}

@@ -1,0 +1,48 @@
+extends layout
+
+include mixins/form/_inputs
+include mixins/form/_deleteModal
+
+block content
+	.layout.layout--narrow
+		.page-title
+			h1.page-title__title= title
+			if trek._id
+				+deleteButton('Trek')
+
+		.area
+			- const updateURL = trek._id === undefined ? '' : `/treks/${trek._id}/update`
+			form(method='POST' action=updateURL)
+			
+				+inputText({ 
+					name: 'title',
+					label: 'Title',
+					value: trek.title
+				})
+				+inputTextarea({ 
+					name: 'description',
+					label: 'Description',
+					maxlength: 1000,
+					value: trek.description
+				})
+				+inputDate({ 
+					name: 'startDate',
+					label: 'Start Date',
+					value: h.moment(trek.startDate).format('YYYY-MM-DD')
+				})
+				+inputDate({ 
+					name: 'endDate',
+					label: 'End Date',
+					value: h.moment(trek.endDate).format('YYYY-MM-DD')
+				})
+				+inputCheckbox({ 
+					label: 'Show on site',
+					name: 'isPublished',
+					value: trek.isPublished
+				})
+
+				+inputSubmit({
+					label: 'Save'
+				})
+	if trek._id
+		+deleteModal('trek',`/treks/${trek._id}/delete`)

@@ -1,0 +1,57 @@
+// variables.scss
+// ------------------------
+// Colour variables for the entire site. Other then shades of gray, these are the only colours that should be used in css.
+
+// where the css background images and fonts can be found
+$graphics_path: '/public/graphics/';
+
+// colours
+$blue: #3e9cb7;
+$blue_med: #448395;
+$blue_light: #7dd4ed;
+$blue_light_desat: #86b5c3;
+$blue_pale: #c2ebf7;
+$blue_grey: #a8b0b2;
+$blue_dark: #45575c;
+$blue_darker: #262b2d;
+
+$teal: #5ae4ae;
+$teal_light: #d6f0e6;
+$teal_med: #53b38e;
+$teal_dark: #20805b;
+
+$red: #c6583e;
+$red_dark: #b54334;
+$yellow: #efda63;
+$green: #3cad74;
+
+$border_light: #dde0e1;
+$border_med: darken($border_light, 10);
+$bg_light: #f1f1ee;
+$bg_blue: #f1f5f6;
+$bg_nav: #2e3d42;
+
+$text: #565e5b;
+$text_med: #8c928f;
+$text_light: #8c928f;
+
+// advanced layouts background
+$grey: #54656a;
+$grey_dark: #36454a;
+
+// z-indexes
+$zlevel-sitetop: 10;
+$zlevel-header: 10;
+$zlevel-maintitle: 9;
+$zlevel-navsub: 20;
+
+// Sprites
+$dim_sprites: 600px 550px;
+$dim_sprites_pagetemplates: 250px 200px;
+$social_sprites: 520px 200px;
+
+// Type
+$base_font_size: 16;
+$font_sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Open Sans',
+	sans-serif;
+$font_serif: Georgia, serif;

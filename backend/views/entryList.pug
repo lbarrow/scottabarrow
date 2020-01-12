@@ -1,0 +1,27 @@
+extends layout
+
+include mixins/_pagination
+
+block content
+	.layout.layout--narrow
+		.page-title
+			h1.page-title__title= title
+			.page-title__extra
+				a.button(href="/entries/create") 
+					+svgIcon('add')
+					| New Entry
+
+		.area
+			.table-wrap: table
+				thead
+					tr
+						th Title
+						th Date
+				each entry in entries
+					tr
+						td: a(href="/entries/" + entry._id) #{entry.title}
+						td= h.moment(entry.date).format('MMMM Do, YYYY')
+				else
+					tr: td.fine-print There are no entries.
+
+			+pagination('entries', page, pages, count)

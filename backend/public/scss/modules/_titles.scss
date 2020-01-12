@@ -1,0 +1,94 @@
+.page-title {
+	margin: 0 0 1.25rem;
+	@media (min-width: 25.5em) {
+		display: flex;
+		align-items: center;
+	}
+}
+.page-title__title {
+	@include font-size(24);
+	font-weight: bold;
+	margin: 0;
+	line-height: 1;
+	@media (min-width: 25.5em) {
+		@include font-size(30);
+	}
+}
+.page-title__extra {
+	padding-top: 0.625rem;
+	@media (min-width: 25.5em) {
+		margin-left: auto;
+		padding-top: 0;
+		padding-left: 1.25rem;
+	}
+	.button {
+		white-space: nowrap;
+	}
+}
+
+.title {
+	color: $blue_med;
+	@include font-size(18);
+	font-weight: bold;
+	line-height: 1.3;
+	margin: 2.5rem 0 0.625rem;
+	&:first-child {
+		margin-top: 0;
+	}
+}
+.title--big {
+	@include font-size(21);
+	@media (min-width: 48em) {
+		@include font-size(28);
+	}
+}
+.title--small {
+	@include font-size(14);
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}
+.title--dark {
+	color: $text;
+	font-weight: normal;
+}
+.title__note {
+	color: $text_med;
+	@include font-size(14);
+	font-style: italic;
+	text-transform: none;
+	margin-left: 0.375rem;
+	letter-spacing: 0;
+}
+.title__link,
+.title__buttons {
+	@include font-size(14);
+	text-decoration: none;
+}
+.title-wrapper {
+	margin: 2.5rem 0 0.625rem;
+	display: flex;
+	align-items: flex-end;
+	flex-wrap: wrap;
+	> .title__link,
+	> .title__buttons {
+		white-space: nowrap;
+		position: relative;
+		top: -0.2em;
+	}
+	> .title__buttons {
+		top: 0;
+	}
+	> .title__link.button {
+		top: 0;
+	}
+	.title {
+		flex-grow: 1;
+		margin: 0;
+		padding-right: 0.625rem;
+	}
+}
+.title-wrapper--border {
+	border-bottom: 0.125rem solid $border_light;
+	margin-bottom: 1.25rem;
+	padding-bottom: 0.3125rem;
+}

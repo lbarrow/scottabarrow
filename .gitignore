@@ -1,0 +1,30 @@
+**/node_modules/
+**/iisnode/
+**/dist/
+**/.sass-cache/
+**/.DS_Store
+*.log
+variables.env
+.env
+npm.install.last
+npm.run.build.last
+.vscode/
+
+# Ignores all paths and files in uploads
+**/public/uploads/**
+# Watch all paths in uploads
+!**/public/uploads/**/
+# Watch any .gitkeep files in any path
+!**/public/uploads/**/.gitkeep
+
+**/logs/**
+!**/logs/**/
+!**/logs/**/.gitkeep
+
+**/public/json/**
+**/public/json/**/
+!**/public/json/.gitkeep
+
+**/public/data/**
+!**/public/data/**/
+!**/public/data/**/.gitkeep
