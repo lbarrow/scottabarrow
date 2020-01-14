@@ -23,28 +23,8 @@ $.ajaxSetup({
 $('.js-select2').select2();
 
 // setup date pickers
-// disables today and future dates for restricting orders
-flatpickr('.js-datepicker-range.js-disable-future:not(.flatpickr-input)', {
-	mode: 'range',
-	disable: [
-		function(date) {
-			const today = new Date().setHours(0, 0, 0, 0);
-			return date >= today;
-		}
-	]
-});
-// disables today and past dates for restricting send dates
-flatpickr('.js-datepicker.js-disable-past:not(.flatpickr-input)', {
-	disable: [
-		function(date) {
-			const today = new Date().setHours(0, 0, 0, 0);
-			return date <= today;
-		}
-	]
-});
 // setup general date pickers
-flatpickr('.js-datepicker-range:not(.flatpickr-input)', { mode: 'range' });
-flatpickr('.js-datepicker:not(.flatpickr-input)');
+flatpickr('.js-datepicker');
 
 // setup dialogs
 var dialogs = [];
