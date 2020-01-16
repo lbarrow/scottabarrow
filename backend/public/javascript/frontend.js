@@ -12,7 +12,7 @@
 import $ from 'jquery';
 import 'select2';
 import flatpickr from 'flatpickr';
-import Dialog from './Dialog';
+import Dialog from './dialog';
 
 // globally set ajax caching to false
 $.ajaxSetup({
