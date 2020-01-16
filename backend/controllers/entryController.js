@@ -41,17 +41,9 @@ exports.resize = async (req, res, next) => {
 	req.body.photo = `${uuid.v4()}.${extension}`;
 
 	// now we resize
-	// const photo = await jimp.read(req.file.buffer);
-	// if (photo.bitmap.width > photo.bitmap.height) {
-	// 	await photo.resize(2000, jimp.AUTO);
-	// 	req.body.photoOrientation = 'landscape';
-	// } else {
-	// 	await photo.resize(jimp.AUTO, 2000);
-	// 	req.body.photoOrientation = 'portrait';
-	// }
 	const metadata = await sharp(req.file.buffer).metadata();
 	const resizeConstraint = 2000;
-	let resizeParams;
+	let resizeParam;
 	if (metadata.orientation < 5) {
 		req.body.photoOrientation = 'portrait';
 		resizeParam = { width: resizeConstraint };
@@ -88,7 +80,10 @@ exports.create = async (req, res) => {
 	}
 	await entry.save();
 
-	req.flash('success', `Successfully created ${entry.title}.`);
+	req.flash(
+		'success',
+		`Update <strong>${entry.title}</strong>. <a href="/entries/${entry._id}">View entry →</a>`
+	);
 	res.redirect(`/entries`);
 };
 
@@ -140,13 +135,13 @@ exports.downPhoto = async (req, res) => {
 
 exports.list = async (req, res) => {
 	const page = req.params.page || 1;
-	const limit = 4;
+	const limit = 20;
 	const skip = page * limit - limit;
 
 	const entriesPromise = Entry.find()
 		.skip(skip)
 		.limit(limit)
-		.sort({ startDate: 'desc' });
+		.sort({ date: 'desc' });
 
 	const countPromise = Entry.count();
 

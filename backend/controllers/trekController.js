@@ -26,7 +26,7 @@ exports.delete = async (req, res) => {
 
 exports.list = async (req, res) => {
 	const page = req.params.page || 1;
-	const limit = 4;
+	const limit = 20;
 	const skip = page * limit - limit;
 
 	const treksPromise = Trek.find()
