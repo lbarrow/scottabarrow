@@ -82,7 +82,7 @@ exports.create = async (req, res) => {
 
 	req.flash(
 		'success',
-		`Update <strong>${entry.title}</strong>. <a href="/entries/${entry._id}">View entry →</a>`
+		`Created <strong>${entry.title}</strong>. <a href="/entries/${entry._id}">View entry →</a>`
 	);
 	res.redirect(`/entries`);
 };
@@ -186,7 +186,7 @@ exports.update = async (req, res) => {
 
 	req.flash(
 		'success',
-		`Update <strong>${entry.title}</strong>. <a href="/entries/${entry._id}">View entry →</a>`
+		`Updated <strong>${entry.title}</strong>. <a href="/entries/${entry._id}">View entry →</a>`
 	);
 	res.redirect(`/entries`);
 };

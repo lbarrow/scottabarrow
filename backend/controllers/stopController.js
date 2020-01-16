@@ -16,7 +16,10 @@ exports.new = async (req, res) => {
 exports.create = async (req, res) => {
 	req.body.location.type = 'Point';
 	const stop = await new Stop(req.body).save();
-	req.flash('success', `Successfully created ${stop.title}.`);
+	req.flash(
+		'success',
+		`Successfully created <strong>${stop.title}</strong>. <a href="/stops/${stop._id}">View stop →</a>`
+	);
 	res.redirect(`/stops`);
 };
 
@@ -66,7 +69,7 @@ exports.update = async (req, res) => {
 	}).exec();
 	req.flash(
 		'success',
-		`Update <strong>${stop.title}</strong>. <a href="/stops/${stop._id}">View stop →</a>`
+		`Updated <strong>${stop.title}</strong>. <a href="/stops/${stop._id}">View stop →</a>`
 	);
 	res.redirect(`/stops`);
 };

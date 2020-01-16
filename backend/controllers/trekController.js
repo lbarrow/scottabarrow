@@ -14,7 +14,10 @@ exports.new = (req, res) => {
 exports.create = async (req, res) => {
 	req.body.isPublished = Boolean(req.body.isPublished);
 	const trek = await new Trek(req.body).save();
-	req.flash('success', `Successfully created ${trek.title}.`);
+	req.flash(
+		'success',
+		`Successfully created <strong>${trek.title}</strong>. <a href="/treks/${trek._id}">View trek →</a>`
+	);
 	res.redirect(`/treks`);
 };
 
@@ -63,7 +66,7 @@ exports.update = async (req, res) => {
 	}).exec();
 	req.flash(
 		'success',
-		`Update <strong>${trek.title}</strong>. <a href="/treks/${trek._id}">View trek →</a>`
+		`Updated <strong>${trek.title}</strong>. <a href="/treks/${trek._id}">View trek →</a>`
 	);
 	res.redirect(`/treks`);
 };
