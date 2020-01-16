@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Entry = mongoose.model('Entry');
 const Stop = mongoose.model('Stop');
 const multer = require('multer');
-const jimp = require('jimp');
+const sharp = require('sharp');
 const uuid = require('uuid');
 
 const multerOptions = {
@@ -41,18 +41,34 @@ exports.resize = async (req, res, next) => {
 	req.body.photo = `${uuid.v4()}.${extension}`;
 
 	// now we resize
-	const photo = await jimp.read(req.file.buffer);
-	if (photo.bitmap.width > photo.bitmap.height) {
-		await photo.resize(2000, jimp.AUTO);
-		req.body.photoOrientation = 'landscape';
-	} else {
-		await photo.resize(jimp.AUTO, 2000);
+	// const photo = await jimp.read(req.file.buffer);
+	// if (photo.bitmap.width > photo.bitmap.height) {
+	// 	await photo.resize(2000, jimp.AUTO);
+	// 	req.body.photoOrientation = 'landscape';
+	// } else {
+	// 	await photo.resize(jimp.AUTO, 2000);
+	// 	req.body.photoOrientation = 'portrait';
+	// }
+	const metadata = await sharp(req.file.buffer).metadata();
+	const resizeConstraint = 2000;
+	let resizeParams;
+	if (metadata.orientation < 5) {
 		req.body.photoOrientation = 'portrait';
+		resizeParam = { width: resizeConstraint };
+		req.body.photoWidth = resizeConstraint;
+		req.body.photoHeight = (metadata.height / metadata.width) * resizeConstraint;
+	} else {
+		req.body.photoOrientation = 'landscape';
+		resizeParam = { height: resizeConstraint };
+		req.body.photoWidth = (metadata.height / metadata.width) * resizeConstraint;
+		req.body.photoHeight = resizeConstraint;
 	}
-	req.body.photoWidth = photo.bitmap.width;
-	req.body.photoHeight = photo.bitmap.height;
-	await photo.quality(65);
-	await photo.write(`./public/uploads/${req.body.photo}`);
+	await sharp(req.file.buffer)
+		.rotate()
+		.resize(resizeParam)
+		.sharpen()
+		.jpeg({ quality: 70 })
+		.toFile(`./public/uploads/${req.body.photo}`);
 
 	// once we have written the photo to our filesystem, keep going!
 	next();
@@ -111,7 +127,6 @@ exports.downPhoto = async (req, res) => {
 	let entry = await Entry.findOne({ _id: req.params.entryId });
 	for (let i = 0; i < entry.photos.length; i++) {
 		if (`${entry.photos[i]._id}` === req.params.photoId) {
-			console.log('found index', i);
 			var tempObject = entry.photos.splice(i, 1, entry.photos[i + 1])[0]; // get the item from the entry.photos
 			entry.photos.splice(i + 1, 1, tempObject);
 			break;
@@ -152,7 +167,6 @@ exports.list = async (req, res) => {
 exports.detail = async (req, res) => {
 	const stopValues = await getStopSelectValues();
 	const entry = await Entry.findOne({ _id: req.params.id });
-	console.log(entry.date);
 
 	res.render('entryForm', { title: `Edit ${entry.title}`, entry, stopValues });
 };
