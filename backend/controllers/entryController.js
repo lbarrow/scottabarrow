@@ -143,7 +143,7 @@ exports.list = async (req, res) => {
 		.limit(limit)
 		.sort({ date: 'desc' });
 
-	const countPromise = Entry.count();
+	const countPromise = Entry.countDocuments();
 
 	const [entries, count] = await Promise.all([entriesPromise, countPromise]);
 	const pages = Math.ceil(count / limit);

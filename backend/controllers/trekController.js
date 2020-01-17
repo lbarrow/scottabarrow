@@ -37,7 +37,7 @@ exports.list = async (req, res) => {
 		.limit(limit)
 		.sort({ startDate: 'desc' });
 
-	const countPromise = Trek.count();
+	const countPromise = Trek.countDocuments();
 
 	const [treks, count] = await Promise.all([treksPromise, countPromise]);
 	const pages = Math.ceil(count / limit);
