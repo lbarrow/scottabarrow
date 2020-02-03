@@ -1,7 +1,5 @@
 <template lang="pug">
 	.trek-detail
-		.map
-			#map
 		.treks
 			h2.trek__title {{ trek.title }}
 			.trek__dates {{ trekDates }}
@@ -26,15 +24,12 @@
 </template>
 
 <script>
-import mapboxgl from 'mapbox-gl';
 import dayjs from 'dayjs';
+import { EventBus } from '@/eventBus.js';
 export default {
 	name: 'trekDetail',
 	data() {
 		return {
-			accessToken:
-				'pk.eyJ1IjoibGJhcnJvdyIsImEiOiJjazV2eW5mNjcwMWJiM29uZWxxZWI3c2phIn0.lxPca-7PM7R9p0_mgbE8eg', // your access token. Needed if you using Mapbox maps
-			mapStyle: 'mapbox://styles/lbarrow/cjr9tnaw01soq2tqu89o2238l', // your map style
 			trek: {},
 			stops: []
 		};
@@ -60,75 +55,13 @@ export default {
 				const coordinates = this.stops.map(stop => {
 					return stop.location.coordinates;
 				});
-
-				mapboxgl.accessToken = this.accessToken;
-				var map = new mapboxgl.Map({
-					container: 'map',
-					style: this.mapStyle,
-					center: [45, 45],
-					zoom: 1
-					// interactive: false
-				});
-
-				map.on('load', function() {
-					// Add a source and layer displaying a point which will be animated in a circle.
-					map.addSource('route', {
-						type: 'geojson',
-						data: {
-							type: 'Feature',
-							properties: {},
-							geometry: {
-								type: 'LineString',
-								coordinates: coordinates
-							}
-						}
-					});
-					map.addLayer({
-						id: 'route',
-						type: 'line',
-						source: 'route',
-						layout: {
-							'line-join': 'round',
-							'line-cap': 'round'
-						},
-						paint: {
-							'line-color': '#888',
-							'line-width': 4
-						}
-					});
-					coordinates.forEach(coord => {
-						new mapboxgl.Marker().setLngLat(coord).addTo(map);
-					});
-
-					// Pass the first coordinates in the LineString to `lngLatBounds` &
-					// wrap each coordinate pair in `extend` to include them in the bounds
-					// result. A variation of this technique could be applied to zooming
-					// to the bounds of multiple Points or Polygon geomteries - it just
-					// requires wrapping all the coordinates with the extend method.
-					let bounds = coordinates.reduce(function(bounds, coord) {
-						return bounds.extend(coord);
-					}, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
-
-					map.fitBounds(bounds, {
-						padding: 40
-					});
-				});
+				EventBus.$emit('trekLoaded', coordinates);
 			});
 	}
 };
 </script>
 
 <style lang="scss">
-.map {
-	position: relative;
-	height: 50rem;
-}
-#map {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	width: 100%;
-}
 .trek__title {
 	font-size: 4.2rem;
 }

@@ -1,17 +1,20 @@
-<template>
-	<div class="site" id="app">
-		<site-nav />
-		<router-view />
-	</div>
+<template lang="pug">
+	.site#app
+		site-nav
+		.map
+			main-map
+		router-view
 </template>
 
 <script>
 import SiteNav from '@/components/SiteNav.vue';
+import MainMap from '@/components/MainMap.vue';
 
 export default {
 	name: 'App',
 	components: {
-		SiteNav
+		SiteNav,
+		MainMap
 	}
 };
 </script>
@@ -155,5 +158,9 @@ body {
 	display: grid;
 	grid-template-rows: auto 1fr;
 	width: 100%;
+}
+.map {
+	position: relative;
+	height: 50rem;
 }
 </style>
