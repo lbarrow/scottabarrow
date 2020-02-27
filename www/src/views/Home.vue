@@ -1,6 +1,6 @@
 <template lang="pug">
 	.home
-		.treks
+		.home-treks
 			h2 Treks
 			ul
 				li(v-for="trek in treks" :key="trek._id")
@@ -44,6 +44,7 @@
 
 <script>
 import TrekLink from '@/components/TrekLink.vue';
+import { EventBus } from '@/eventBus.js';
 
 export default {
 	name: 'home',
@@ -62,6 +63,7 @@ export default {
 			})
 			.then(result => {
 				this.treks = result.treks;
+				EventBus.$emit('allTreksLoaded', this.treks);
 			});
 	}
 };
@@ -70,22 +72,55 @@ export default {
 <style lang="scss">
 .home {
 	padding: 4rem;
-	display: grid;
-	grid-gap: 4rem;
-	grid-template-columns: 1fr 30rem;
+	max-width: 40rem;
+	margin: 0 auto;
+	@media (min-width: 48em) {
+		max-width: none;
+	}
+	@media (min-width: 60em) {
+		padding: 6rem;
+	}
+	@media (min-width: 72em) {
+		padding: 8rem;
+	}
 }
-.treks {
-	background-color: $green;
-	padding: 4rem;
+.home-treks {
+	h2 {
+		font-size: 2.1rem;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		margin: 0 0 1.2rem;
+		color: $green_light;
+		@media (min-width: em) {
+			margin-bottom: 2rem;
+		}
+	}
+	ul {
+		@media (min-width: 48em) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			grid-gap: 2rem;
+		}
+		@media (min-width: 72em) {
+			grid-gap: 4rem;
+		}
+	}
+	li {
+		margin-bottom: 4rem;
+	}
 }
 .subscribe-form__title {
 	font-size: 2.4rem;
 	font-weight: 200;
 	margin: 0 0 2.5rem;
 	line-height: 1.15;
+	color: $green_light;
 }
 .subscribe-form {
-	padding: 4rem;
+	padding: 4rem 2rem;
+	@media (min-width: 48em) {
+		padding: 4rem 0;
+	}
 	label {
 		display: block;
 		font-size: 1.2rem;

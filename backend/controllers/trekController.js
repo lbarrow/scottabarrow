@@ -1,5 +1,20 @@
 const mongoose = require('mongoose');
 const Trek = mongoose.model('Trek');
+const multer = require('multer');
+const sharp = require('sharp');
+const uuid = require('uuid');
+
+const multerOptions = {
+	storage: multer.memoryStorage(),
+	fileFilter(req, file, next) {
+		const isPhoto = file.mimetype.startsWith('image/');
+		if (isPhoto) {
+			next(null, true);
+		} else {
+			next({ message: "That filetype isn't allowed!" }, false);
+		}
+	}
+};
 
 exports.setNavItem = (req, res, next) => {
 	res.locals.currentNavItem = 'Treks';
@@ -9,6 +24,39 @@ exports.setNavItem = (req, res, next) => {
 exports.new = (req, res) => {
 	const trek = {};
 	res.render('trekForm', { title: 'Add Trek', trek });
+};
+
+exports.upload = multer(multerOptions).single('photofile');
+
+exports.resize = async (req, res, next) => {
+	console.log('req.file', req.file);
+	// check if there is no new file to resize
+	if (!req.file) {
+		next(); // skip to the next middleware
+		return;
+	}
+
+	const extension = req.file.mimetype.split('/')[1];
+	req.body.coverImagePath = `${uuid.v4()}.${extension}`;
+
+	// now we resize
+	const metadata = await sharp(req.file.buffer).metadata();
+	const resizeConstraint = 2000;
+	let resizeParam;
+	if (metadata.orientation < 5) {
+		resizeParam = { width: resizeConstraint };
+	} else {
+		resizeParam = { height: resizeConstraint };
+	}
+	await sharp(req.file.buffer)
+		.rotate()
+		.resize(resizeParam)
+		.sharpen()
+		.jpeg({ quality: 70 })
+		.toFile(`./public/uploads/treks/${req.body.coverImagePath}`);
+
+	// once we have written the photo to our filesystem, keep going!
+	next();
 };
 
 exports.create = async (req, res) => {
@@ -59,6 +107,7 @@ exports.detail = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
+	console.log('req.body', req.body);
 	req.body.isPublished = Boolean(req.body.isPublished);
 	const trek = await Trek.findOneAndUpdate({ _id: req.params.id }, req.body, {
 		new: true,

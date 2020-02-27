@@ -1,9 +1,11 @@
 <template lang="pug">
 	.site#app
 		site-nav
-		.map
-			main-map
-		router-view
+		main.site-main
+			.site-content
+				router-view
+			.site-map
+				main-map
 </template>
 
 <script>
@@ -114,7 +116,7 @@ button {
 	box-shadow: 0 2px 6px rgba(black, 0.15);
 	-webkit-font-smoothing: antialiased;
 	border-radius: 0.375rem;
-	background-color: $green;
+	background-color: $orange;
 	color: white;
 	cursor: pointer;
 	display: inline-flex;
@@ -130,7 +132,7 @@ button {
 	transition: background-color, color, transform 0.2s ease;
 	white-space: normal;
 	&:hover {
-		background-color: darken($green, 10);
+		background-color: darken($orange, 10);
 		color: white;
 		text-decoration: none;
 	}
@@ -152,15 +154,50 @@ body {
 	text-rendering: optimizeSpeed;
 	line-height: 1.5;
 	font-size: 1.8rem;
-	display: flex;
 }
-.site {
-	display: grid;
-	grid-template-rows: auto 1fr;
+.site-main {
 	width: 100%;
 }
-.map {
-	position: relative;
-	height: 50rem;
+.site-content {
+	@media (min-width: 48em) {
+		width: 50rem;
+	}
+	@media (min-width: 60em) {
+		width: 60rem;
+	}
+	@media (min-width: 72em) {
+		width: 70rem;
+	}
+	@media (min-width: 84em) {
+		width: 80rem;
+	}
+	@media (min-width: 96em) {
+		width: 100rem;
+	}
+}
+.site-map {
+	display: none;
+	@media (min-width: 48em) {
+		position: fixed;
+		display: block;
+		right: 2rem;
+		top: 2rem;
+		bottom: 2rem;
+		border-radius: 0.4rem;
+		overflow: hidden;
+		left: 50rem;
+	}
+	@media (min-width: 60em) {
+		left: 60rem;
+	}
+	@media (min-width: 72em) {
+		left: 70rem;
+	}
+	@media (min-width: 84em) {
+		left: 80rem;
+	}
+	@media (min-width: 96em) {
+		left: 100rem;
+	}
 }
 </style>

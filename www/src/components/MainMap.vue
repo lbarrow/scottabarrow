@@ -18,10 +18,39 @@ export default {
 		return {
 			mapLoaded: false,
 			shouldDrawTrek: false,
+			shouldDrawWorld: false,
 			coordinates: []
 		};
 	},
 	methods: {
+		showWorld() {
+			// clear map layer & source.
+			var mapLayer = map.getLayer('route');
+			if (typeof mapLayer !== 'undefined') {
+				map.removeLayer('route').removeSource('route');
+			}
+			// clear markers
+			if (mapboxMarkers.length > 0) {
+				for (var i = mapboxMarkers.length - 1; i >= 0; i--) {
+					mapboxMarkers[i].remove();
+				}
+				mapboxMarkers = [];
+			}
+			// setup markers for each stop
+			console.log('hi');
+			let coordinates = [
+				[-60, -60],
+				[90, 90]
+			];
+
+			// find outer bounds of coordinates
+			let bounds = coordinates.reduce(function(bounds, coord) {
+				return bounds.extend(coord);
+			}, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+			map.fitBounds(bounds, {
+				padding: 40
+			});
+		},
 		drawTrek(coordinates) {
 			// clear map layer & source.
 			var mapLayer = map.getLayer('route');
@@ -73,8 +102,26 @@ export default {
 			}, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
 
 			map.fitBounds(bounds, {
-				padding: 40
+				padding: 40,
+				animate: false
 			});
+
+			this.goToStop(coordinates[0]);
+		},
+		goToStop(coordinates) {
+			map.flyTo({
+				center: coordinates
+			});
+
+			// find related marker and highlight it it
+			for (var i = mapboxMarkers.length - 1; i >= 0; i--) {
+				const markerCoords = mapboxMarkers[i].getLngLat().toArray();
+				if (markerCoords[0] == coordinates[0] && markerCoords[1] == coordinates[1]) {
+					mapboxMarkers[i].setOffset([0, -24]);
+				} else {
+					mapboxMarkers[i].setOffset([0, -14]);
+				}
+			}
 		}
 	},
 	mounted() {
@@ -83,8 +130,8 @@ export default {
 			container: 'map',
 			style: mapStyle,
 			center: [45, 45],
-			zoom: 1
-			// interactive: false
+			zoom: 1,
+			interactive: false
 		});
 
 		const vm = this;
@@ -94,9 +141,20 @@ export default {
 				vm.drawTrek(vm.coordinates);
 				vm.shouldDrawTrek = false;
 			}
+			if (vm.shouldDrawWorld) {
+				vm.showWorld();
+				vm.shouldDrawWorld = false;
+			}
 		});
 
-		// Listen for the i-got-clicked event and its payload.
+		EventBus.$on('allTreksLoaded', () => {
+			if (vm.mapLoaded) {
+				vm.showWorld();
+			} else {
+				vm.shouldDrawWorld = true;
+			}
+		});
+
 		EventBus.$on('trekLoaded', coordinates => {
 			if (vm.mapLoaded) {
 				vm.drawTrek(coordinates);
@@ -104,6 +162,10 @@ export default {
 				vm.coordinates = coordinates;
 				vm.shouldDrawTrek = true;
 			}
+		});
+
+		EventBus.$on('stopShown', coordinates => {
+			vm.goToStop(coordinates);
 		});
 	}
 };

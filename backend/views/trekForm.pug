@@ -12,7 +12,7 @@ block content
 
 		.area
 			- const updateURL = trek._id === undefined ? '' : `/treks/${trek._id}/update`
-			form(method='POST' action=updateURL)
+			form(method='POST' action=updateURL enctype="multipart/form-data")
 			
 				+inputText({ 
 					name: 'title',
@@ -40,7 +40,18 @@ block content
 					name: 'isPublished',
 					value: trek.isPublished
 				})
+				
+				if trek.coverImagePath
+					h2.title.title--minor Cover Image
+					.photo-grid__photo
+						img(src=`/uploads/treks/${trek.coverImagePath}`)
 
+				+inputUploadFile({ 
+					label: 'Upload Cover Image',
+					name: 'photofile',
+					filetype: 'image'
+				})
+				
 				+inputSubmit({
 					label: 'Save'
 				})

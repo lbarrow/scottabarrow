@@ -23,6 +23,10 @@ const trekSchema = new mongoose.Schema(
 		endDate: {
 			type: Date,
 			default: Date.now
+		},
+		coverImagePath: {
+			type: String,
+			required: true
 		}
 	},
 	{

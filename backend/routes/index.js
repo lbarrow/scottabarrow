@@ -9,8 +9,18 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 router.use('/treks', authController.isLoggedIn, trekController.setNavItem);
 router.get('/treks/create', trekController.new);
-router.post('/treks/create', catchErrors(trekController.create));
-router.post('/treks/:id/update', catchErrors(trekController.update));
+router.post(
+	'/treks/create',
+	trekController.upload,
+	catchErrors(trekController.resize),
+	catchErrors(trekController.create)
+);
+router.post(
+	'/treks/:id/update',
+	trekController.upload,
+	catchErrors(trekController.resize),
+	catchErrors(trekController.update)
+);
 router.get('/treks/:id/delete', catchErrors(trekController.delete));
 router.get('/treks/:id', catchErrors(trekController.detail));
 router.get('/treks', catchErrors(trekController.list));
