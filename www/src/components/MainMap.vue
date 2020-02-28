@@ -37,7 +37,6 @@ export default {
 				mapboxMarkers = [];
 			}
 			// setup markers for each stop
-			console.log('hi');
 			let coordinates = [
 				[-60, -60],
 				[90, 90]

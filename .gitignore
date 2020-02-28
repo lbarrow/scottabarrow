@@ -1,6 +1,5 @@
 **/node_modules/
 **/iisnode/
-**/dist/
 **/.sass-cache/
 **/.DS_Store
 *.log
