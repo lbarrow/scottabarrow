@@ -4,11 +4,12 @@
 			.trek-link__dates {{ trekDates }}
 			h3.trek-link__title {{ trek.title }}
 		.trek-link__photo
-			img(:src="'http://localhost:7777/uploads/treks/' + trek.coverImagePath")
+			img(:src="imgPath + trek.coverImagePath")
 </template>
 
 <script>
 import dayjs from 'dayjs';
+import { apiURL } from '@/utilities/apiURL.js';
 
 export default {
 	name: 'TrekLink',
@@ -18,6 +19,9 @@ export default {
 	computed: {
 		trekDates() {
 			return dayjs(this.trek.startDate).format('YYYY');
+		},
+		imgPath() {
+			return apiURL + 'uploads/treks/';
 		}
 	}
 };

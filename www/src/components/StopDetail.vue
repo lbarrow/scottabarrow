@@ -8,17 +8,23 @@
 					li(v-for="photo in entry.photos" :key="photo._id")
 						.photo
 							.photo__img
-								img(:src="'http://localhost:7777/uploads/' + photo.filePath")
+								img(:src="imgPath + photo.filePath")
 							.photo__caption(v-if="photo.caption")
 								.photo__caption-text {{ photo.caption }}
 </template>
 
 <script>
+import { apiURL } from '@/utilities/apiURL.js';
 export default {
 	name: 'StopDetail',
 	props: {
 		stop: {
 			type: Object
+		}
+	},
+	computed: {
+		imgPath() {
+			return apiURL + 'uploads/';
 		}
 	}
 };

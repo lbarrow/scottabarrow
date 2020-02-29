@@ -16,6 +16,7 @@
 <script>
 import dayjs from 'dayjs';
 import { EventBus } from '@/eventBus.js';
+import { apiURL } from '@/utilities/apiURL.js';
 import StopDetail from '@/components/StopDetail';
 export default {
 	name: 'trekDetail',
@@ -55,7 +56,7 @@ export default {
 		}
 	},
 	mounted() {
-		fetch(`http://localhost:7777/api/treks/${this.$route.params.id}`)
+		fetch(`${apiURL}api/treks/${this.$route.params.id}`)
 			.then(response => {
 				return response.json();
 			})

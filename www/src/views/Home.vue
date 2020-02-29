@@ -45,6 +45,7 @@
 <script>
 import TrekLink from '@/components/TrekLink.vue';
 import { EventBus } from '@/eventBus.js';
+import { apiURL } from '@/utilities/apiURL.js';
 
 export default {
 	name: 'home',
@@ -57,7 +58,7 @@ export default {
 		};
 	},
 	mounted() {
-		fetch('http://localhost:7777/api/treks')
+		fetch(`${apiURL}api/treks`)
 			.then(response => {
 				return response.json();
 			})
