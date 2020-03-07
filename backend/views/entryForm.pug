@@ -33,6 +33,7 @@ block content
 					value: h.moment(entry.date).format('YYYY-MM-DD'),
 					required: true
 				})
+				- if(defaultStopToNewest) entry.stop = stopValues[1].value
 				+inputSelect({ 
 					name: 'stop',
 					label: 'Stop',

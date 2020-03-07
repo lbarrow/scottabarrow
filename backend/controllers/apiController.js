@@ -19,6 +19,16 @@ exports.trekDetail = async (req, res) => {
 				foreignField: 'stop',
 				as: 'entries'
 			}
+		},
+		{ $unwind: { path: '$entries' } },
+		{ $sort: { 'entries.date': 1 } },
+		{
+			$group: {
+				_id: '$_id',
+				entries: {
+					$push: '$entries'
+				}
+			}
 		}
 	]);
 	res.json({ trek, stops });

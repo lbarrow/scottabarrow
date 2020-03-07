@@ -25,7 +25,7 @@ exports.setNavItem = (req, res, next) => {
 exports.new = async (req, res) => {
 	const entry = {};
 	const stopValues = await getStopSelectValues();
-	res.render('entryForm', { title: 'Add Entry', entry, stopValues });
+	res.render('entryForm', { title: 'Add Entry', entry, stopValues, defaultStopToNewest: true });
 };
 
 exports.upload = multer(multerOptions).single('photofile');
@@ -193,7 +193,7 @@ exports.update = async (req, res) => {
 };
 
 getStopSelectValues = async () => {
-	const stops = await Stop.find();
+	const stops = await Stop.find().sort({ startDate: -1 });
 	let stopValues = stops.map(stop => {
 		return { value: stop._id, label: stop.title };
 	});

@@ -4,6 +4,8 @@
 		ul.entry-list
 			li.entry(v-for="entry in stop.entries" :key="entry._id")
 				h5.entry__title {{ entry.title }}
+				.entry__date {{ formatDate(entry.date) }}
+				.entry__desc {{ entry.description }}
 				ul.photo-list
 					li(v-for="photo in entry.photos" :key="photo._id")
 						.photo
@@ -15,6 +17,7 @@
 
 <script>
 import { apiURL } from '@/utilities/apiURL.js';
+import dayjs from 'dayjs';
 export default {
 	name: 'StopDetail',
 	props: {
@@ -25,6 +28,11 @@ export default {
 	computed: {
 		imgPath() {
 			return apiURL + 'uploads/';
+		}
+	},
+	methods: {
+		formatDate(dateString) {
+			return dayjs(dateString).format('MMMM D, YYYY');
 		}
 	}
 };
@@ -58,11 +66,20 @@ export default {
 	}
 }
 .entry__title {
+	margin: 0 0 0.2rem;
 	font-size: 2.1rem;
+}
+.entry__date {
+	font-size: 1.3rem;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
 	margin: 0 0 1rem;
 	@media (min-width: 60em) {
 		margin-bottom: 2rem;
 	}
+}
+.entry__desc {
+	margin-bottom: 2rem;
 }
 .photo-list {
 	.photo {

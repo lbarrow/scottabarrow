@@ -96,21 +96,28 @@ export default {
 			});
 
 			// find outer bounds of coordinates
-			let bounds = coordinates.reduce(function(bounds, coord) {
-				return bounds.extend(coord);
-			}, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+			var onlyOneStop = false;
+			if (coordinates.length > 1) {
+				let bounds = coordinates.reduce(function(bounds, coord) {
+					return bounds.extend(coord);
+				}, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
 
-			map.fitBounds(bounds, {
-				padding: 40,
-				animate: false
-			});
+				map.fitBounds(bounds, {
+					padding: 40,
+					animate: false
+				});
+			} else {
+				onlyOneStop = true;
+			}
 
-			this.goToStop(coordinates[0]);
+			this.goToStop(coordinates[0], onlyOneStop);
 		},
-		goToStop(coordinates) {
-			map.flyTo({
+		goToStop(coordinates, onlyOneStop) {
+			var options = {
 				center: coordinates
-			});
+			};
+			if (onlyOneStop) options.zoom = 4;
+			map.flyTo(options);
 
 			// find related marker and highlight it it
 			for (var i = mapboxMarkers.length - 1; i >= 0; i--) {
@@ -164,7 +171,7 @@ export default {
 		});
 
 		EventBus.$on('stopShown', coordinates => {
-			vm.goToStop(coordinates);
+			vm.goToStop(coordinates, false);
 		});
 	}
 };
