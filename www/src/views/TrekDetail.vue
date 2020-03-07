@@ -56,7 +56,7 @@ export default {
 		}
 	},
 	mounted() {
-		fetch(`${apiURL}api/treks/${this.$route.params.id}`)
+		fetch(`${apiURL}api/treks/${this.$route.params.slug}`)
 			.then(response => {
 				return response.json();
 			})

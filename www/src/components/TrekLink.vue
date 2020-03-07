@@ -1,5 +1,5 @@
 <template lang="pug">
-	router-link.trek-link(:to="'/treks/' + trek._id")
+	router-link.trek-link(:to="'/treks/' + trek.slug")
 		.trek-link__info
 			.trek-link__dates {{ trekDates }}
 			h3.trek-link__title {{ trek.title }}

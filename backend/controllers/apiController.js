@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const ObjectId = mongoose.Types.ObjectId;
 const Trek = mongoose.model('Trek');
 const Stop = mongoose.model('Stop');
 
@@ -9,16 +8,10 @@ exports.treks = async (req, res) => {
 };
 
 exports.trekDetail = async (req, res) => {
-	const trek = await Trek.findOne({ _id: req.params.id });
+	const trek = await Trek.findOne({ slug: req.params.slug });
 	const stops = await Stop.aggregate([
-		{ $match: { trek: ObjectId(req.params.id) } },
+		{ $match: { trek: trek._id } },
 		{
-			// $lookup: {
-			// 	from: 'entries',
-			// 	localField: '_id',
-			// 	foreignField: 'stop',
-			// 	as: 'entries'
-			// }
 			$lookup: {
 				from: 'entries',
 				let: { entryId: '$_id' },
@@ -29,16 +22,6 @@ exports.trekDetail = async (req, res) => {
 				as: 'entries'
 			}
 		}
-		// { $unwind: { path: '$entries' } },
-		// { $sort: { 'entries.date': 1 } },
-		// {
-		// 	$group: {
-		// 		_id: '$_id',
-		// 		entries: {
-		// 			$push: '$entries'
-		// 		}
-		// 	}
-		// }
 	]);
 	res.json({ trek, stops });
 };

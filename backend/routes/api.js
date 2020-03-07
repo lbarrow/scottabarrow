@@ -6,6 +6,6 @@ const { allowCrossDomainAccess } = require('../utility/allowCrossDomainAccess');
 
 router.use('/', allowCrossDomainAccess);
 router.get('/treks', catchErrors(apiController.treks));
-router.get('/treks/:id', catchErrors(apiController.trekDetail));
+router.get('/treks/:slug', catchErrors(apiController.trekDetail));
 
 module.exports = router;
