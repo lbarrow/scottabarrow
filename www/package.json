@@ -11,7 +11,7 @@
     "core-js": "^3.4.4",
     "dayjs": "^1.8.19",
     "mapbox-gl": "^1.6.1",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "vue": "^2.6.10",
     "vue-cli-plugin-pug": "^1.0.7",
     "vue-mapbox": "^0.4.1",
